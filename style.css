@@ -1,0 +1,33 @@
+.center-menu {
+    margin: 0 auto;
+    width: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.login-but {
+    background-color: rgb(231, 231, 231);
+}
+
+.signup-but {
+    background-color: rgb(231, 231, 231);
+    margin-right: 2%;
+}
+
+.userImage {
+    width: 6vh;
+    margin-right: 2%;
+}
+
+.logo-image {
+    width: 10vh;
+}
+
+.dropdown {
+    background-color: aqua;
+}
+
+.navber {
+    background-color: #669c9c;
+}
