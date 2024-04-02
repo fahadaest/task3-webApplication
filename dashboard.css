@@ -95,7 +95,7 @@ nav {
 
 .dashboard-side-menu {
 	height: 100%;
-	background-color: #dedede;
+	background-color: #f0f0f0;
 	padding: 1px;
 	display: flex;
 	flex-direction: column;
@@ -272,7 +272,7 @@ th[col-index] {
 .sidebar {
 	width: 15%;
 	padding: 2rem 1rem;
-	background: #d9d9d9;
+	background-color: #f0f0f0;
 }
 
 .sidebar h4 {
@@ -305,4 +305,13 @@ th[col-index] {
 
 .balance .info i {
 	margin-right: 2px;
+}
+
+
+.navbar-expand-lg {
+	background-color: #f0f0f0 !important;
+}
+
+.highlight {
+	background-color: yellow;
 }

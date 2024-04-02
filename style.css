@@ -24,10 +24,11 @@
     width: 10vh;
 }
 
-.dropdown {
-    background-color: aqua;
+
+.navbar-collapse {
+    background-color: #f0f0f0;
 }
 
-.navber {
-    background-color: #669c9c;
+.navbar-expand-lg {
+    background-color: #f0f0f0 !important;
 }

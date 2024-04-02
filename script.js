@@ -436,3 +436,12 @@ function updateRow() {
     storeDataToLocalStorage();
     alert("data Updated");
 }
+
+
+
+
+
+
+function highlight() {
+    alert("abcd");
+}
