@@ -197,6 +197,25 @@ function addProduct() {
     alert("Product added")
 
     storeDataToLocalStorage();
+
+    resetFormValues();
+}
+
+
+function resetFormValues() {
+    // Reset input values to placeholders
+    document.getElementById("inputName").value = "";
+    document.getElementById("inputTitle").value = "";
+    document.getElementById("inputDescription").value = "";
+    document.getElementById("inputVendor").value = "";
+    document.getElementById("inputState").selectedIndex = 0; // Assuming the first option is a placeholder
+    document.getElementById("inputStock").value = "";
+    document.getElementById("inputLocation").value = "";
+    document.getElementById("inputBuyPrice").value = "";
+    document.getElementById("inputSalePrice").value = "";
+    document.getElementById("inputPurQuan").value = "";
+    document.getElementById("shippingRate").value = "";
+    document.getElementById("inputRefill").value = "";
 }
 
 function generateId() {
