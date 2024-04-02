@@ -88,11 +88,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
-
-
-// Add product
-
-
 // function for adding products
 function addProduct() {
 
@@ -192,7 +187,6 @@ function addProduct() {
 
     console.log(tr);
 
-    // Append the row to the table
     document.getElementById("dataTableContent").appendChild(tr);
     alert("Product added")
 
@@ -203,12 +197,11 @@ function addProduct() {
 
 
 function resetFormValues() {
-    // Reset input values to placeholders
     document.getElementById("inputName").value = "";
     document.getElementById("inputTitle").value = "";
     document.getElementById("inputDescription").value = "";
     document.getElementById("inputVendor").value = "";
-    document.getElementById("inputState").selectedIndex = 0; // Assuming the first option is a placeholder
+    document.getElementById("inputState").selectedIndex = 0;
     document.getElementById("inputStock").value = "";
     document.getElementById("inputLocation").value = "";
     document.getElementById("inputBuyPrice").value = "";
@@ -225,36 +218,30 @@ function generateId() {
 
 
 
-// save sata to local storage
+// save data to local storage
 function storeDataToLocalStorage() {
-    const table = document.getElementById('dataTableContent'); // Assuming your table has an id of 'dataTableContent'
+    const table = document.getElementById('dataTableContent');
     const tableData = [];
 
-    // Loop through each row in the table
     for (let i = 1; i < table.rows.length; i++) {
         const rowData = {};
         const row = table.rows[i].cells;
 
-        // Get the first cell (which contains the checkbox)
         const firstCell = row[0];
         const checkbox = firstCell.querySelector('input[type="checkbox"]');
 
-        // Save the checkbox state
         rowData['firstCheckbox'] = checkbox.checked;
 
-        // Loop through each cell starting from the second cell
         for (let j = 1; j < row.length; j++) {
-            const key = table.rows[0].cells[j].classList[0]; // Get the class name of the header cell
-            const value = row[j].textContent.trim(); // Get the text content of the cell
+            const key = table.rows[0].cells[j].classList[0];
+            const value = row[j].textContent.trim();
 
-            // Add key-value pair to rowData object
             rowData[key] = value;
         }
 
-        tableData.push(rowData); // Push rowData object to tableData array
+        tableData.push(rowData);
     }
 
-    // Store tableData in local storage
     localStorage.setItem('tableData', JSON.stringify(tableData));
 }
 
@@ -267,32 +254,27 @@ function retrieveDataFromLocalStorage() {
     const tableData = JSON.parse(localStorage.getItem('tableData'));
 
     if (tableData) {
-        const table = document.getElementById('dataTableContent'); // Assuming your table has an id of 'dataTableContent'
+        const table = document.getElementById('dataTableContent');
 
-        // Clear existing table rows
         while (table.rows.length > 1) {
             table.deleteRow(1);
         }
 
-        // Loop through tableData and populate the table
         tableData.forEach(data => {
             const row = table.insertRow(-1);
 
-            // Create a checkbox element
             const checkbox = document.createElement('input');
             checkbox.type = 'checkbox';
-            checkbox.checked = data['firstCheckbox']; // Set the checkbox state from the stored data
+            checkbox.checked = data['firstCheckbox'];
             const cell = row.insertCell();
             cell.appendChild(checkbox);
 
-            // Loop through each key in data object starting from the second key
             Object.keys(data).slice(1).forEach(key => {
                 const cell = row.insertCell();
                 cell.innerHTML = `<p>${data[key]}</p>`;
             });
         });
 
-        // Call the sorting function after populating the table
         sortTableByColumn(table, 0, true);
     }
 }
@@ -300,28 +282,21 @@ function retrieveDataFromLocalStorage() {
 
 // Function to delete selected rows
 function deleteTableRow() {
-    const table = document.getElementById('dataTableContent'); // Assuming your table has an id of 'dataTableContent'
+    const table = document.getElementById('dataTableContent');
     const rows = table.rows;
 
-    // Iterate over rows in reverse order to avoid index changes during deletion
     for (let i = rows.length - 1; i > 0; i--) {
         const row = rows[i];
-        const checkbox = row.cells[0].querySelector('input[type="checkbox"]'); // Assuming the checkbox is in the first cell
+        const checkbox = row.cells[0].querySelector('input[type="checkbox"]');
 
-        // Check if the checkbox is checked
         if (checkbox.checked) {
-            table.deleteRow(i); // Delete the row if the checkbox is checked
+            table.deleteRow(i);
         }
     }
 
-    // After deleting rows, update local storage with the new table data
     storeDataToLocalStorage();
-
     alert("product deleted");
 }
-
-
-
 
 
 
@@ -329,43 +304,32 @@ function editRow() {
     const table = document.getElementById('dataTableContent');
     const checkedRowsData = [];
 
-    // Loop through each row in the table
     for (let i = 1; i < table.rows.length; i++) {
         const rowData = {};
         const row = table.rows[i].cells;
 
-        // Get the first cell (which contains the checkbox)
         const firstCell = row[0];
         const checkbox = firstCell.querySelector('input[type="checkbox"]');
 
-        // Check if the checkbox is checked
         if (checkbox.checked) {
             console.log(i)
-            // Loop through each cell starting from the second cell
             for (let j = 2; j < row.length; j++) {
-                const key = table.rows[0].cells[j].classList[0]; // Get the class name of the header cell
-                const value = row[j].textContent.trim(); // Get the text content of the cell
+                const key = table.rows[0].cells[j].classList[0];
+                const value = row[j].textContent.trim();
 
-                // Add key-value pair to rowData object
                 rowData[key] = value;
             }
 
-            checkedRowsData.push(rowData); // Push rowData object to checkedRowsData array
+            checkedRowsData.push(rowData);
         }
     }
-
-    // console.log(checkbox);
 
 
     var inputElement = document.getElementById('editInputName');
     inputElement.value = checkedRowsData[0].pro_name;
 
-
     var inputElement1 = document.getElementById('EditInputTitle');
     inputElement1.value = checkedRowsData[0].pro_title;
-
-
-
 
     var inputElement2 = document.getElementById('EinputDescription');
     inputElement2.value = checkedRowsData[0].pro_des;
@@ -376,19 +340,14 @@ function editRow() {
     var inputElement4 = document.getElementById('EinputState');
     inputElement4.value = checkedRowsData[0].pro_type;
 
-
-
     var inputElement5 = document.getElementById('EinputStock');
     inputElement5.value = checkedRowsData[0].pro_sto;
 
     var inputElement6 = document.getElementById('EinputLocation');
     inputElement6.value = checkedRowsData[0].pro_loc;
 
-
-
     var inputElement7 = document.getElementById('EinputBuyPrice');
     inputElement7.value = checkedRowsData[0].pro_pri;
-
 
     var inputElement8 = document.getElementById('EinputSalePrice');
     inputElement8.value = checkedRowsData[0].pro_sale;
@@ -405,20 +364,8 @@ function editRow() {
     var inputElement11 = document.getElementById('EinputRefill');
     inputElement11.value = checkedRowsData[0].pro_refill;
 
-
-
-
-
-
-
-
     // Show the modal
     $('#editModal').modal('show');
-
-
-
-
-
 
 }
 
@@ -454,13 +401,4 @@ function updateRow() {
 
     storeDataToLocalStorage();
     alert("data Updated");
-}
-
-
-
-
-
-
-function highlight() {
-    alert("abcd");
 }
