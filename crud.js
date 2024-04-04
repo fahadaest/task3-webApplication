@@ -1,96 +1,5 @@
-
-
-// Login
-document.addEventListener("DOMContentLoaded", function () {
-    document.getElementById("loginBtn").addEventListener("click", function (event) {
-        event.preventDefault();
-
-        var enteredUsernameEmail = document.getElementById("loginEmail").value;
-        var enteredPassword = document.getElementById("loginPassword").value;
-
-        var usersArray = localStorage.getItem("usersArray");
-
-        if (usersArray) {
-            usersArray = JSON.parse(usersArray);
-
-            var loginSuccessful = false;
-
-            for (var i = 0; i < usersArray.length; i++) {
-                var userData = usersArray[i];
-
-                if ((enteredUsernameEmail === userData.email || enteredUsernameEmail === userData.username) && enteredPassword === userData.password) {
-                    loginSuccessful = true;
-                    break;
-                }
-            }
-
-            if (loginSuccessful) {
-                var loginButton = document.getElementById("logBut");
-                var signupButton = document.querySelector(".signup-but");
-                loginButton.parentNode.removeChild(loginButton);
-                signupButton.parentNode.removeChild(signupButton);
-
-                document.querySelector(".userDropdown").style.display = "block";
-
-                $('#loginModal').modal('hide');
-                alert("Login successful!");
-            } else {
-                alert("Wrong email or password. Please try again.");
-            }
-        } else {
-            alert("No user data found. Please sign up first.");
-        }
-    });
-});
-
-
-
-
-
-
-// sign up
-document.addEventListener("DOMContentLoaded", function () {
-    var usersArray = localStorage.getItem("usersArray");
-    if (!usersArray) {
-        usersArray = [];
-    } else {
-        usersArray = JSON.parse(usersArray);
-    }
-
-    document.getElementById("signupBtn").addEventListener("click", function (event) {
-        event.preventDefault();
-
-        var username = document.getElementById("exampleDropdownFormUsername1").value;
-        var email = document.getElementById("exampleDropdownFormEmail1").value;
-        var password = document.getElementById("exampleDropdownFormPassword1").value;
-
-        var userData = {
-            "username": username,
-            "email": email,
-            "password": password
-        };
-
-        usersArray.push(userData);
-
-        var jsonData = JSON.stringify(usersArray);
-
-        localStorage.setItem("usersArray", jsonData);
-
-        alert("Sign up successful!");
-
-        document.getElementById("exampleDropdownFormUsername1").value = "";
-        document.getElementById("exampleDropdownFormEmail1").value = "";
-        document.getElementById("exampleDropdownFormPassword1").value = "";
-        $('#signupModal').modal('hide');
-    });
-});
-
-
-
-
 // function for adding products
 function addProduct() {
-
     var tr = document.createElement("tr");
 
     // Checkbox
@@ -195,7 +104,7 @@ function addProduct() {
     resetFormValues();
 }
 
-
+// function will reset form values to ad product
 function resetFormValues() {
     document.getElementById("inputName").value = "";
     document.getElementById("inputTitle").value = "";
@@ -211,72 +120,9 @@ function resetFormValues() {
     document.getElementById("inputRefill").value = "";
 }
 
+// it will generate a random id
 function generateId() {
     return Math.floor(Math.random() * 900000) + 100000;
-}
-
-
-
-
-// save data to local storage
-function storeDataToLocalStorage() {
-    const table = document.getElementById('dataTableContent');
-    const tableData = [];
-
-    for (let i = 1; i < table.rows.length; i++) {
-        const rowData = {};
-        const row = table.rows[i].cells;
-
-        const firstCell = row[0];
-        const checkbox = firstCell.querySelector('input[type="checkbox"]');
-
-        rowData['firstCheckbox'] = checkbox.checked;
-
-        for (let j = 1; j < row.length; j++) {
-            const key = table.rows[0].cells[j].classList[0];
-            const value = row[j].textContent.trim();
-
-            rowData[key] = value;
-        }
-
-        tableData.push(rowData);
-    }
-
-    localStorage.setItem('tableData', JSON.stringify(tableData));
-}
-
-
-
-
-
-// Function to retrieve data from local storage and populate the table
-function retrieveDataFromLocalStorage() {
-    const tableData = JSON.parse(localStorage.getItem('tableData'));
-
-    if (tableData) {
-        const table = document.getElementById('dataTableContent');
-
-        while (table.rows.length > 1) {
-            table.deleteRow(1);
-        }
-
-        tableData.forEach(data => {
-            const row = table.insertRow(-1);
-
-            const checkbox = document.createElement('input');
-            checkbox.type = 'checkbox';
-            checkbox.checked = data['firstCheckbox'];
-            const cell = row.insertCell();
-            cell.appendChild(checkbox);
-
-            Object.keys(data).slice(1).forEach(key => {
-                const cell = row.insertCell();
-                cell.innerHTML = `<p>${data[key]}</p>`;
-            });
-        });
-
-        sortTableByColumn(table, 0, true);
-    }
 }
 
 
@@ -300,6 +146,7 @@ function deleteTableRow() {
 
 
 
+// function to edit row
 function editRow() {
     const table = document.getElementById('dataTableContent');
     const checkedRowsData = [];
@@ -371,6 +218,7 @@ function editRow() {
 
 
 
+// function to update row
 function updateRow() {
 
     const table = document.getElementById('dataTableContent');
